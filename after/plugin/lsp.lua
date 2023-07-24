@@ -1,4 +1,4 @@
-Local lsp = require('lsp-zero').preset({
+local lsp = require('lsp-zero').preset({
   float_border = 'rounded',
   call_servers = 'local',
   configure_diagnostics = true,
