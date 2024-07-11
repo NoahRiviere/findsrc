@@ -23,6 +23,6 @@ VAR="$3"
 VAR="${VAR:=SRC}"
 MAKEFILE="$4"
 
-SRC="$(find "${SRC_PATH}" -type f -name ${FORMAT} | sed "s|^${SRC_PATH}/\(.*\)$|\1|")"
+SRC="$(find "${SRC_PATH}" -type f -name "${FORMAT}" | sed "s|^${SRC_PATH}/\(.*\)$|\1|")"
 SRC="${SRC//$'\n'/ }"
 sed -i -e "0,/^\(\s*${VAR}\s*=\s*\).*$/ s|^\(\s*${VAR}\s*=\s*\).*$|\1${SRC}|" "${MAKEFILE:=Makefile}"
