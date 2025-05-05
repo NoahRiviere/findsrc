@@ -70,6 +70,14 @@ vim.keymap.set("n", "<leader>ca", function()
     require("cellular-automaton").start_animation("make_it_rain")
 end)
 
+vim.keymap.set("n", "<leader>cb", function()
+    require("cellular-automaton").start_animation("scramble")
+end)
+
+vim.keymap.set("n", "<leader>cc", function()
+    require("cellular-automaton").start_animation("game_of_life")
+end)
+
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
