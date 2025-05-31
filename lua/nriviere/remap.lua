@@ -28,9 +28,6 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 -- vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", function()
-    require("conform").format({ bufnr = 0 })
-end)
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
@@ -67,17 +64,17 @@ vim.keymap.set(
 ]]
 
 vim.keymap.set("n", "<leader>ca", function()
-    require("cellular-automaton").start_animation("make_it_rain")
+	require("cellular-automaton").start_animation("make_it_rain")
 end)
 
 vim.keymap.set("n", "<leader>cb", function()
-    require("cellular-automaton").start_animation("scramble")
+	require("cellular-automaton").start_animation("scramble")
 end)
 
 vim.keymap.set("n", "<leader>cc", function()
-    require("cellular-automaton").start_animation("game_of_life")
+	require("cellular-automaton").start_animation("game_of_life")
 end)
 
 vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
+	vim.cmd("so")
 end)

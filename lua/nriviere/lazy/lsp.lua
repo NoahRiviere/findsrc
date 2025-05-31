@@ -1,7 +1,6 @@
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		"stevearc/conform.nvim",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"hrsh7th/cmp-nvim-lsp",
@@ -15,9 +14,6 @@ return {
 	},
 
 	config = function()
-		require("conform").setup({
-			formatters_by_ft = {},
-		})
 		local cmp = require("cmp")
 		local cmp_lsp = require("cmp_nvim_lsp")
 		local capabilities = vim.tbl_deep_extend(
@@ -61,9 +57,21 @@ return {
 				end,
 				["clangd"] = function()
 					local lspconfig = require("lspconfig")
+					local ft_clang_format = vim.fn.stdpath("data") .. "/mason/bin/clang-format"
 					lspconfig.clangd.setup({
 						capabilities = capabilities,
-						cmd = {"clangd", "--background-index", "--clang-tidy" },
+						cmd = { "clangd",
+							"--background-index",
+							"--clang-tidy",
+							"--clang-tidy-checks=*,-clang-analyzer-alpha.*",
+							"--enable-config",
+							"--suggest-missing-includes",
+							"--header-insertion=iwyu",
+							"--pch-storage-memory",
+							"--all-scopes-completion",
+							"--limit-results=1000",
+							"--clang-format-executable=" .. ft_clang_format,
+						},
 					})
 				end
 			},
