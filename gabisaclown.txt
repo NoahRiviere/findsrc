@@ -1,0 +1,20 @@
+--memcheck:suppressions=./.minishell.supp
+--memcheck:track-origins=yes
+--memcheck:leak-check=full
+--memcheck:show-leak-kinds=all
+--memcheck:track-fds=yes
+--memcheck:show-error-list=yes
+{
+    _fuck_readline_
+        Memcheck:Leak
+        match-leak-kinds: all
+        ...
+        fun:readline
+}
+{
+    _fuck_add_history_
+        Memcheck:Leak
+        match-leak-kinds: all
+        ...
+        fun:add_history
+}
