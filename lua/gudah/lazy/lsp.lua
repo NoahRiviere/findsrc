@@ -11,9 +11,14 @@ return {
 		"L3MON4D3/LuaSnip",
 		"saadparwaiz1/cmp_luasnip",
 		"j-hui/fidget.nvim",
+		"folke/lazydev.nvim",
 	},
 
 	config = function()
+		require("conform").setup({
+			formatters_by_ft = {
+			}
+		})
 		local cmp = require("cmp")
 		local cmp_lsp = require("cmp_nvim_lsp")
 		local capabilities = vim.tbl_deep_extend(
@@ -22,6 +27,12 @@ return {
 			vim.lsp.protocol.make_client_capabilities(),
 			cmp_lsp.default_capabilities()
 		)
+
+		require("lazydev").setup({
+			library = {
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+			},
+		})
 
 		require("fidget").setup({})
 		require("mason").setup()
@@ -40,19 +51,6 @@ return {
 					local lspconfig = require("lspconfig")
 					lspconfig.lua_ls.setup({
 						capabilities = capabilities,
-						settings = {
-							Lua = {
-								format = {
-									enable = true,
-									-- Put format options here
-									-- NOTE: the value should be STRING!!
-									defaultConfig = {
-										indent_style = "space",
-										indent_size = "2",
-									},
-								},
-							},
-						},
 					})
 				end,
 				["clangd"] = function()
@@ -94,11 +92,13 @@ return {
 				["<C-Space>"] = cmp.mapping.complete(),
 			}),
 			sources = cmp.config.sources({
+				{ name = "lazydev", group_index = 0 },
 				{ name = "nvim_lsp" },
 				{ name = "luasnip" }, -- For luasnip users.
 			}, {
-				{ name = "buffer" },
-			}),
+					{ name = "buffer" },
+					{ name = "path" },
+				}),
 		})
 
 		vim.diagnostic.config({

@@ -13,7 +13,6 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "=ap", "ma=ap'a")
 vim.keymap.set("n", "<leader>zig", "<cmd>LspRestart<cr>")
-
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
@@ -65,10 +64,6 @@ vim.keymap.set(
 
 vim.keymap.set("n", "<leader>ca", function()
 	require("cellular-automaton").start_animation("make_it_rain")
-end)
-
-vim.keymap.set("n", "<leader>cb", function()
-	require("cellular-automaton").start_animation("scramble")
 end)
 
 vim.keymap.set("n", "<leader>cc", function()

@@ -1,9 +1,9 @@
-require("nriviere.set")
-require("nriviere.remap")
-require("nriviere.lazy_init")
+require("gudah.set")
+require("gudah.remap")
+require("gudah.lazy_init")
 
 local augroup = vim.api.nvim_create_augroup
-local nriviereGroup = augroup('nriviere', {})
+local gudahGroup = augroup('gudah', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
@@ -23,7 +23,7 @@ autocmd('TextYankPost', {
 	group = yank_group,
 	pattern = "*",
 	callback = function()
-		vim.highlight.on_yank({
+		vim.hl.on_yank({
 			higroup = 'IncSearch',
 			timeout = 40,
 		})
@@ -31,24 +31,24 @@ autocmd('TextYankPost', {
 })
 
 autocmd({ "BufWritePre" }, {
-	group = nriviereGroup,
+	group = gudahGroup,
 	pattern = "*",
 	command = [[%s/\s\+$//e]],
 })
 
 autocmd('BufEnter', {
-	group = nriviereGroup,
+	group = gudahGroup,
 	callback = function()
 		if vim.bo.filetype == "zig" then
-			vim.cmd.colorscheme("tokyonight-night")
+			pcall(vim.cmd.colorscheme, "tokyonight-night")
 		else
-			vim.cmd.colorscheme("rose-pine-moon")
+			pcall(vim.cmd.colorscheme, "rose-pine-moon")
 		end
 	end
 })
 
 autocmd('LspAttach', {
-	group = nriviereGroup,
+	group = gudahGroup,
 	callback = function(e)
 		local opts = { buffer = e.buf }
 		vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
@@ -59,11 +59,10 @@ autocmd('LspAttach', {
 		vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
 		vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 		vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-		vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
-		vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
-		vim.keymap.set("n", '<leader>f', function() vim.lsp.buf.format({ async = true }) end, opts)
+		vim.keymap.set("n", "]d", function() vim.diagnostic.jump({count = 1, float = true}) end, opts)
+		vim.keymap.set("n", "[d", function() vim.diagnostic.jump({count = -1, float = true}) end, opts)
 		-- autocmd("BufWritePre", {
-		-- 	group = nriviereGroup,
+		-- 	group = gudahGroup,
 		-- 	buffer = e.buf,
 		-- 	callback = function()
 		-- 		vim.lsp.buf.format({ async = false })
